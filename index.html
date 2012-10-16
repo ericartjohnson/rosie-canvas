@@ -6,8 +6,6 @@
 		body{padding:0; margin:0; width:100%; height:100%; overflow: hidden;}
 		#framerate{position: absolute; top: 0;left: 0;}
 	</style>
-	<!--<script type="text/javascript" src="jquery-1.8.2.min.js"></script>-->
-	<script type="text/javascript" src="selfish.js"></script>
 	<script type="text/javascript" src="canvas/scene.js"></script>
 	<script type="text/javascript" src="canvas/views/view.js"></script>
 	<script type="text/javascript" src="canvas/views/circle.js"></script>
@@ -20,60 +18,53 @@
 		window.onready = function(){
 			var canvas = document.getElementById('canvas');
 			if (canvas.getContext){
-				window.mainScene = Canvas.Scene.new({
+				window.mainScene = new Canvas.Scene({
 					'ctx':canvas.getContext('2d'),
-					'showDebug' : true,
-					'animate' : true
+					'showDebug' : true
 				});
 				window.mainScene.resize();
 
-				window.centerCircle =  Canvas.Views.Circle.new({
-					'translate' : {'x':mainScene.center.x,'y':mainScene.center.y},
-					'scale' : {'x':1,'y':1},
+				window.centerCircle =  new Canvas.Views.Circle({
 					'fillStyle' : 'rgba(100,150,100,1)',
-					'subviews' : [],
+					'shadowBlur' : 10,
 					'update' : function update(scene){
 						if(!scene || !scene.ctx) return;
 						var self = this;
 						self.translate = {'x':mainScene.center.x,'y':mainScene.center.y};
 						var t = new Date().getTime();
 						var s = Math.cos(t*2/1000)/2 + 1.1;
-						self.scale.x = s;
-						self.scale.y = s;
-
+						self.scale = {'x':s,'y':s};
 						for(var v in self.subviews){
 							self.subviews[v].update(scene);
 						}
 					}
 				});
 
-				window.mainScene.subviews.push(centerCircle);
+				window.mainScene.addSubview(centerCircle);
 				
-				window.testText = Canvas.Views.Text.new({
+				window.testText = new Canvas.Views.Text({
 					'text' : 'hello world!',
 					'font' : '50px sans-serif',
 					'align' : 'center',
 					'baseline' : 'middle',
-					'translate' : {'x':0, 'y':0},
-					'scale' : {'x':1, 'y':1},
-					'rotate' : Math.PI,
+					'shadowBlur' : 10,
+					'shadowColor' : 'black',
 					'update' : function update(scene){
 						if(!scene || !scene.ctx) return;
 						var self = this;
 						var t = new Date().getTime();
-						self.translate.x = Math.sin(t/1000) * 250 + scene.center.x;
-						self.translate.y = -Math.cos(t/1000) * 130 + scene.center.y;
+						var x = Math.sin(t/1000) * 250 + scene.center.x;
+						var y = -Math.cos(t/1000) * 130 + scene.center.y;
+						self.translate = {'x':x,'y':y};
 						self.rotate = Math.sin(t/1000)/2 * Math.PI;
 					}
 				});
 				
-				window.mainScene.subviews.push(testText);
+				window.mainScene.addSubview(testText);
 
-				window.testText2 = Canvas.Views.Text.new({
+				window.testText2 = new Canvas.Views.Text({
 					'text' : 'bye bye',
 					'font' : '10px serif',
-					'origin' : {'x':0, 'y':0},
-					'rotate' : Math.PI/4,
 					'update' : function update(scene){
 						if(!scene || !scene.ctx) return;
 						var self = this;
@@ -82,17 +73,25 @@
 					}
 				});
 				
-				// window.mainScene.subviews.push(testText2);
-				window.centerCircle.subviews.push(testText2);
+				// window.mainScene.addSubview(testText2);
+				window.centerCircle.addSubview(testText2);
 				
-				window.testRect = Canvas.Views.Rectangle.new({
+				window.testRect = new Canvas.Views.Rectangle({
 					'origin' : {'x':500, 'y':10},
-					'strokeStyle' : 'rgb(100,100,100)',
-					'lineWidth' : 3,
-					'stroke' : true
+					'strokeStyle' : 'rgb(100,100,200)',
+					'fillStyle' : 'rgb(200,200,200)',
+					'lineWidth' : 5,
+					'stroke' : true,
+					'cornerRadius' : 15,
+					'update' : function(scene){
+						if(!scene || !scene.ctx) return;
+						var self = this;
+						var t = new Date().getTime();
+						self.cornerRadius = Math.abs(Math.sin(t/1000)/2) * 25;
+					}
 				});
 				
-				window.mainScene.subviews.push(testRect);
+				window.mainScene.addSubview(testRect);
 
 				window.mainScene.render();
 			}
