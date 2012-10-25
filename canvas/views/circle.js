@@ -12,6 +12,7 @@
 			var self = this;
 			scene.ctx.beginPath();
 			scene.ctx.arc(self.origin.x,self.origin.y,self.radius,0,Math.PI*2,false);
+			self.onInput(scene);
 			if(self.fill) scene.ctx.fill();
 			if(self.stroke) scene.ctx.stroke();
 		}

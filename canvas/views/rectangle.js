@@ -33,6 +33,8 @@
 			    // draw left and top left corner
 			    scene.ctx.arcTo(self.origin.x,self.origin.y,self.origin.x+self.cornerRadius,self.origin.y,self.cornerRadius);
 
+			    scene.ctx.closePath();
+
 				if(self.fill) scene.ctx.fill();
 				if(self.stroke) scene.ctx.stroke();
 			}

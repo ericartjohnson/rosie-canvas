@@ -90,6 +90,9 @@ if(typeof(Canvas.Views) != 'object')Canvas.Views = {};
 			for(var v in self.subviews){
 				self.subviews[v].update(scene);
 			}
+		},
+		'onInput' : function onInput(){
+			if(!scene || !scene.ctx) return;
 		}
 	}
 })();

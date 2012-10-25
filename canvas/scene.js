@@ -21,6 +21,7 @@ window.requestAnimFrame = (function(callback) {
 	};
 
 	Canvas.Scene.prototype = {
+		'input' : {'state':null,'event':null},
 		'alpha' : 1,
 		'showDebug' : false,
 		'lastCalledTime' : null,
@@ -54,6 +55,10 @@ window.requestAnimFrame = (function(callback) {
 				self.subviews[v].render(self);
 				self.ctx.restore();
 			}
+
+			// self.input.state = null;
+			// self.input.event = null;
+
 			if(self.animate){
 				requestAnimFrame(function() {
 					if(self.showDebug){

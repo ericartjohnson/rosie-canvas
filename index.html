@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="utf-8"/>
 	<title>Eric Johnson</title>
 	<style rel="stylsheet" type="text/css">
-		body{padding:0; margin:0; width:100%; height:100%; overflow: hidden;}
+		body{background:#333;padding:0; margin:0; width:100%; height:100%; overflow: hidden;}
 		#framerate{position: absolute; top: 0;left: 0;}
 	</style>
 	<script type="text/javascript" src="canvas/scene.js"></script>
@@ -15,8 +16,16 @@
 <body>
 	<canvas id="canvas"></canvas>
 	<script type="text/javascript">
+
+		window.onMouseMove = function(e){
+			mainScene.input = {'state':'moving','event':e};
+		}
+
 		window.onready = function(){
 			var canvas = document.getElementById('canvas');
+
+			canvas.addEventListener('mousemove',onMouseMove,false);
+
 			if (canvas.getContext){
 				window.mainScene = new Canvas.Scene({
 					'ctx':canvas.getContext('2d'),
@@ -26,17 +35,24 @@
 
 				window.centerCircle =  new Canvas.Views.Circle({
 					'fillStyle' : 'rgba(100,150,100,1)',
-					'shadowBlur' : 10,
+					'stroke' : true,
+					'lineWidth' : 2,
 					'update' : function update(scene){
 						if(!scene || !scene.ctx) return;
 						var self = this;
 						self.translate = {'x':mainScene.center.x,'y':mainScene.center.y};
-						var t = new Date().getTime();
-						var s = Math.cos(t*2/1000)/2 + 1.1;
-						self.scale = {'x':s,'y':s};
-						for(var v in self.subviews){
-							self.subviews[v].update(scene);
-						}
+					},
+					'onInput' : function onInput(scene){
+						if(!scene || !scene.ctx) return;
+						switch(scene.input.state){
+							case 'moving': 
+								if(scene.ctx.isPointInPath(scene.input.event.pageX,scene.input.event.pageY)){
+									scene.ctx.fillStyle = 'rgb(150,100,100)';
+								}else{
+									scene.ctx.fillStyle = self.fillStyle;
+								}
+							break;
+						};
 					}
 				});
 
@@ -63,14 +79,14 @@
 				window.mainScene.addSubview(testText);
 
 				window.testText2 = new Canvas.Views.Text({
-					'text' : 'bye bye',
-					'font' : '10px serif',
-					'update' : function update(scene){
-						if(!scene || !scene.ctx) return;
-						var self = this;
-						var t = new Date().getTime();
-						self.rotate = -Math.tan(t/1000) * Math.PI;
-					}
+					'text' : String.fromCharCode(0x13A7),
+					'font' : '50px serif',
+					'align' : 'center',
+					'baseline' : 'middle',
+					'fillStyle' : 'white',
+					'compositeOperation' : 'source-atop',
+					'rotate' : Math.PI/6,
+					'alpha' : 0.3
 				});
 				
 				// window.mainScene.addSubview(testText2);
@@ -87,7 +103,7 @@
 						if(!scene || !scene.ctx) return;
 						var self = this;
 						var t = new Date().getTime();
-						self.cornerRadius = Math.abs(Math.sin(t/1000)/2) * 25;
+						self.cornerRadius = Math.abs(Math.sin(t/1000)) * 25;
 					}
 				});
 				
