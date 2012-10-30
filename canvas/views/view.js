@@ -91,7 +91,7 @@ if(typeof(Canvas.Views) != 'object')Canvas.Views = {};
 				self.subviews[v].update(scene);
 			}
 		},
-		'onInput' : function onInput(){
+		'onInput' : function onInput(scene){
 			if(!scene || !scene.ctx) return;
 		}
 	}

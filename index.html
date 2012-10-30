@@ -12,10 +12,29 @@
 	<script type="text/javascript" src="canvas/views/circle.js"></script>
 	<script type="text/javascript" src="canvas/views/text.js"></script>
 	<script type="text/javascript" src="canvas/views/rectangle.js"></script>
+	<script type="text/javascript" src="canvas/views/image.js"></script>
 </head>
 <body>
 	<canvas id="canvas"></canvas>
 	<script type="text/javascript">
+
+		window.social_facebook_img = new Image();
+		window.social_facebook_img.src = 'social_icons/facebook.png';
+
+		window.social_twitter_img = new Image();
+		window.social_twitter_img.src = 'social_icons/twitter.png';
+
+		window.social_google_img = new Image();
+		window.social_google_img.src = 'social_icons/google.png';
+
+		window.social_linkedin_img = new Image();
+		window.social_linkedin_img.src = 'social_icons/linkedin.png';
+
+		window.social_clover_img = new Image();
+		window.social_clover_img.src = 'social_icons/clover.png';
+
+		window.social_resume_img = new Image();
+		window.social_resume_img.src = 'social_icons/resume.png';
 
 		window.onMouseMove = function(e){
 			mainScene.input = {'state':'moving','event':e};
@@ -33,10 +52,176 @@
 				});
 				window.mainScene.resize();
 
+				window.fbCircle = new Canvas.Views.Circle({
+					'radius' : 25,
+					'update' : function update(scene){
+						if(!scene || !scene.ctx) return;
+						var self = this;
+						self.translate = {'x':mainScene.center.x + 100,'y':mainScene.center.y - 75};
+					}
+				});
+				window.fbStroke = new Canvas.Views.Circle({
+					'radius' : 25,
+					'stroke' : true,
+					'fill' : false,
+					'lineWidth' : 3,
+					'update' : function update(scene){
+						if(!scene || !scene.ctx) return;
+						var self = this;
+						self.translate = {'x':mainScene.center.x + 100,'y':mainScene.center.y - 75};
+					}
+				});
+				window.fbImage = new Canvas.Views.Image({
+					'image' : social_facebook_img,
+					'compositeOperation' : 'source-atop',
+					'translate' : {'x':-25,'y':-25}
+				});
+				window.fbCircle.addSubview(fbImage);
+				window.mainScene.addSubview(fbCircle);
+				window.mainScene.addSubview(fbStroke);
+
+				window.twCircle = new Canvas.Views.Circle({
+					'radius' : 25,
+					'update' : function update(scene){
+						if(!scene || !scene.ctx) return;
+						var self = this;
+						self.translate = {'x':mainScene.center.x + 130,'y':mainScene.center.y + 25};
+					}
+				});
+				window.twStroke = new Canvas.Views.Circle({
+					'radius' : 25,
+					'stroke' : true,
+					'fill' : false,
+					'lineWidth' : 3,
+					'update' : function update(scene){
+						if(!scene || !scene.ctx) return;
+						var self = this;
+						self.translate = {'x':mainScene.center.x + 130,'y':mainScene.center.y + 25};
+					}
+				});
+				window.twImage = new Canvas.Views.Image({
+					'image' : social_twitter_img,
+					'compositeOperation' : 'source-atop',
+					'translate' : {'x':-25,'y':-25}
+				});
+				window.twCircle.addSubview(twImage);
+				window.mainScene.addSubview(twCircle);
+				window.mainScene.addSubview(twStroke);
+
+				window.ggCircle = new Canvas.Views.Circle({
+					'radius' : 25,
+					'update' : function update(scene){
+						if(!scene || !scene.ctx) return;
+						var self = this;
+						self.translate = {'x':mainScene.center.x + 70,'y':mainScene.center.y + 115};
+					}
+				});
+				window.ggStroke = new Canvas.Views.Circle({
+					'radius' : 25,
+					'stroke' : true,
+					'fill' : false,
+					'lineWidth' : 3,
+					'update' : function update(scene){
+						if(!scene || !scene.ctx) return;
+						var self = this;
+						self.translate = {'x':mainScene.center.x + 70,'y':mainScene.center.y + 115};
+					}
+				});
+				window.ggImage = new Canvas.Views.Image({
+					'image' : social_google_img,
+					'compositeOperation' : 'source-atop',
+					'translate' : {'x':-25,'y':-25}
+				});
+				window.ggCircle.addSubview(ggImage);
+				window.mainScene.addSubview(ggCircle);
+				window.mainScene.addSubview(ggStroke);
+
+				window.liCircle = new Canvas.Views.Circle({
+					'radius' : 25,
+					'update' : function update(scene){
+						if(!scene || !scene.ctx) return;
+						var self = this;
+						self.translate = {'x':mainScene.center.x - 40,'y':mainScene.center.y + 105};
+					}
+				});
+				window.liStroke = new Canvas.Views.Circle({
+					'radius' : 25,
+					'stroke' : true,
+					'fill' : false,
+					'lineWidth' : 3,
+					'update' : function update(scene){
+						if(!scene || !scene.ctx) return;
+						var self = this;
+						self.translate = {'x':mainScene.center.x - 40,'y':mainScene.center.y + 105};
+					}
+				});
+				window.liImage = new Canvas.Views.Image({
+					'image' : social_linkedin_img,
+					'compositeOperation' : 'source-atop',
+					'translate' : {'x':-25,'y':-26}
+				});
+				window.liCircle.addSubview(liImage);
+				window.mainScene.addSubview(liCircle);
+				window.mainScene.addSubview(liStroke);
+
+				window.clCircle = new Canvas.Views.Circle({
+					'radius' : 25,
+					'update' : function update(scene){
+						if(!scene || !scene.ctx) return;
+						var self = this;
+						self.translate = {'x':mainScene.center.x - 110,'y':mainScene.center.y + 25};
+					}
+				});
+				window.clStroke = new Canvas.Views.Circle({
+					'radius' : 25,
+					'stroke' : true,
+					'fill' : false,
+					'lineWidth' : 3,
+					'update' : function update(scene){
+						if(!scene || !scene.ctx) return;
+						var self = this;
+						self.translate = {'x':mainScene.center.x - 110,'y':mainScene.center.y + 25};
+					}
+				});
+				window.clImage = new Canvas.Views.Image({
+					'image' : social_clover_img,
+					'compositeOperation' : 'source-atop',
+					'translate' : {'x':-25,'y':-26}
+				});
+				window.clCircle.addSubview(clImage);
+				window.mainScene.addSubview(clCircle);
+				window.mainScene.addSubview(clStroke);
+
+				window.rsCircle = new Canvas.Views.Circle({
+					'radius' : 25,
+					'fillStyle' : "#888",
+					'update' : function update(scene){
+						if(!scene || !scene.ctx) return;
+						var self = this;
+						self.translate = {'x':mainScene.center.x - 80,'y':mainScene.center.y - 45};
+					}
+				});
+				window.rsStroke = new Canvas.Views.Circle({
+					'radius' : 25,
+					'stroke' : true,
+					'fill' : false,
+					'lineWidth' : 3,
+					'update' : rsCircle.update
+				});
+				window.rsImage = new Canvas.Views.Image({
+					'image' : social_resume_img,
+					'compositeOperation' : 'source-atop',
+					'translate' : {'x':-18,'y':-18},
+					'size' : {'w':75, 'h':45}
+				});
+				window.rsCircle.addSubview(rsImage);
+				window.mainScene.addSubview(rsCircle);
+				window.mainScene.addSubview(rsStroke);
+
 				window.centerCircle =  new Canvas.Views.Circle({
 					'fillStyle' : 'rgba(100,150,100,1)',
 					'stroke' : true,
-					'lineWidth' : 2,
+					'lineWidth' : 3,
 					'update' : function update(scene){
 						if(!scene || !scene.ctx) return;
 						var self = this;
@@ -57,28 +242,8 @@
 				});
 
 				window.mainScene.addSubview(centerCircle);
-				
-				window.testText = new Canvas.Views.Text({
-					'text' : 'hello world!',
-					'font' : '50px sans-serif',
-					'align' : 'center',
-					'baseline' : 'middle',
-					'shadowBlur' : 10,
-					'shadowColor' : 'black',
-					'update' : function update(scene){
-						if(!scene || !scene.ctx) return;
-						var self = this;
-						var t = new Date().getTime();
-						var x = Math.sin(t/1000) * 250 + scene.center.x;
-						var y = -Math.cos(t/1000) * 130 + scene.center.y;
-						self.translate = {'x':x,'y':y};
-						self.rotate = Math.sin(t/1000)/2 * Math.PI;
-					}
-				});
-				
-				window.mainScene.addSubview(testText);
 
-				window.testText2 = new Canvas.Views.Text({
+				window.text_e = new Canvas.Views.Text({
 					'text' : String.fromCharCode(0x13A7),
 					'font' : '50px serif',
 					'align' : 'center',
@@ -88,26 +253,7 @@
 					'rotate' : Math.PI/6,
 					'alpha' : 0.3
 				});
-				
-				// window.mainScene.addSubview(testText2);
-				window.centerCircle.addSubview(testText2);
-				
-				window.testRect = new Canvas.Views.Rectangle({
-					'origin' : {'x':500, 'y':10},
-					'strokeStyle' : 'rgb(100,100,200)',
-					'fillStyle' : 'rgb(200,200,200)',
-					'lineWidth' : 5,
-					'stroke' : true,
-					'cornerRadius' : 15,
-					'update' : function(scene){
-						if(!scene || !scene.ctx) return;
-						var self = this;
-						var t = new Date().getTime();
-						self.cornerRadius = Math.abs(Math.sin(t/1000)) * 25;
-					}
-				});
-				
-				window.mainScene.addSubview(testRect);
+				window.centerCircle.addSubview(text_e);
 
 				window.mainScene.render();
 			}
