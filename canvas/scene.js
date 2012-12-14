@@ -1,4 +1,5 @@
 //Canvas object for namespacing all canvas related 'classes'
+//testing
 window.Canvas = {};
 
 window.requestAnimFrame = (function(callback) {
